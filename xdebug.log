@@ -13,3 +13,8 @@
 [7600] [Step Debug] ERR: Time-out connecting to debugging client, waited: 200 ms. Tried: 127.0.0.1:9055 (through xdebug.client_host/xdebug.client_port) :-(
 [7600] Log closed at 2022-12-28 12:57:46.134412
 
+[1924] Log opened at 2022-12-28 14:16:37.188994
+[1924] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9055.
+[1924] [Step Debug] ERR: Time-out connecting to debugging client, waited: 200 ms. Tried: 127.0.0.1:9055 (through xdebug.client_host/xdebug.client_port) :-(
+[1924] Log closed at 2022-12-28 14:16:38.156808
+
