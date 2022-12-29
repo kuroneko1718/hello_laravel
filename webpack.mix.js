@@ -1,3 +1,4 @@
+// nodejs添加laravel-mix模块
 const mix = require('laravel-mix');
 
 /*
@@ -11,5 +12,10 @@ const mix = require('laravel-mix');
  |
  */
 
+//  使用mix模块定义js文件和sass文件，解析生成文件存放位置
+// mix.js('resources/js/app.js', 'public/js')
+//    .sass('resources/sass/app.scss', 'public/css');
+
+// 针对实际开发时候的静态文件的缓存问题进行静态文件名哈希处理
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css').version();

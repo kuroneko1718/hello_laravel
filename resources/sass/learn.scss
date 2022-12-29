@@ -1,0 +1,51 @@
+
+/*
+
+// 单个文件的导入
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import '~bootstrap/scss/bootstrap.scss';
+
+// 定义变量，使用变量，变量为$开头
+$navbar-color: #3c3e42;
+.navbar-inverse {
+    background-color: $navbar-color;
+}
+
+*/
+
+// 选择器中嵌套
+/*  在sass文件中可改写为下面的嵌套模式
+body div {
+    color: red;
+}
+
+body h1 {
+    margin-top: 10px;
+}
+
+body {
+    div {
+        color: red;
+    }
+    h1 {
+        margin-top: 10px;
+    }
+}
+*/
+
+// 引用父选择器
+/* 
+a {
+    color: white;
+}
+a:hover {
+    color: blue;
+}
+
+a {
+    color: white;
+    &:hover {
+        color: blue;
+    }
+}
+*/
