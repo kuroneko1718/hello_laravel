@@ -26,6 +26,14 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
+    /**
+     * 创建新用户，存入users数据表
+     *
+     * @param Request $request
+     * 
+     * @return [type]
+     * 
+     */
     public function store(Request $request)
     {
         // 使用验证器对request传来的用户输入的数据进行校验
