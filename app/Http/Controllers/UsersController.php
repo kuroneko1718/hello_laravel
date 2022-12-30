@@ -63,7 +63,9 @@ class UsersController extends Controller
         
         // 把user实例传递给重定向路由
         // redirect()->route([$user->id]);
-        
+
+        // 用户创建之后使用Auth提供的login方法自动登录
+        Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的路程~');
         return redirect()->route('users.show', [$user]);
     }
