@@ -37,7 +37,7 @@ class SessionsController extends Controller
 
         // 验证器校验之后再使用Auth类对用户于users数据表进行校验
         // Auth::attempt(['email' => $email, 'password' => $password])
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             // 登录成功之后的动作
             session()->flash('success', '欢迎回来~');
             // 使用Auth类获取验证过后的用户模型实例
