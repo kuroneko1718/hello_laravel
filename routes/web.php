@@ -38,3 +38,10 @@ Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 // 删除用户
 Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
  */
+
+// 显示用户登录页面
+Route::get('login', 'SessionsController@create')->name('login');
+// 创建新会话（完成用户登录动作）
+Route::post('login', 'SessionsController@store')->name('login');
+// 销毁会话（用户退出登录）
+Route::get('logout', 'SessionsController@destroy')->name('logout');
