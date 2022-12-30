@@ -25,4 +25,17 @@ class UsersController extends Controller
         // compact方法将数据绑定到视图
         return view('users.show', compact('user'));
     }
+
+    public function store(Request $request)
+    {
+        // 使用验证器对request传来的用户输入的数据进行校验
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            // 对用户名进行长度校验
+            // 'name' => 'min:3|max:5',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        return;
+    }
 }
