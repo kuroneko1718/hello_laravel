@@ -7,6 +7,12 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    /**
+     * 用户注册页面展示
+     *
+     * @return [type]
+     * 
+     */
     public function create()
     {
         return view('users.create');
