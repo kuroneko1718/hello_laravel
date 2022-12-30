@@ -16,7 +16,7 @@
                     <!-- <a href="#" class="dropdown-item"></a> -->
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item" id="logout">
-                        <form action="{{ route('logout') }}" method="POST">
+                        <form action="{{ route('logout') }}" method="GET">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button type="submit" class="btn btn-block btn-danger" name="button">退出登录</button>
