@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
+    public function __construct()
+    {        
+        // 通过guest中间件，让游客只能访问注册登录页面
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     /**
      * 展示用户登录页面
      *
@@ -40,8 +48,11 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
             // 登录成功之后的动作
             session()->flash('success', '欢迎回来~');
+            
+            $fallback = route('users.show', Auth::user());
             // 使用Auth类获取验证过后的用户模型实例
-            return redirect()->route('users.show', [Auth::user()]);
+            // return redirect()->route('users.show', [Auth::user()]);
+            return redirect()->intended($fallback);
         }
         else {
             // 登录失败之后的动作
@@ -51,8 +62,15 @@ class SessionsController extends Controller
         }
     }
 
+    /**
+     * 用户退出登录动作
+     *
+     * @return [type]
+     * 
+     */
     public function destroy()
     {
+        // Auth类用户退出方法
         Auth::logout();
         session()->flash('success', '您已成功退出！');
         return redirect('login');

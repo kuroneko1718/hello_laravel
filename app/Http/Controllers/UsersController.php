@@ -7,6 +7,20 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        // 通过auth中间件，让指定的方法不需要登录验证就能访问
+        $this->middleware('auth', [
+            // 除了指定的动作（方法）不需要验证，其他都要
+            'except' => ['show', 'create', 'store']
+        ]);
+
+        // 通过guest中间件，让游客只能访问注册页面
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+    
     /**
      * 用户注册页面展示
      *
@@ -70,13 +84,35 @@ class UsersController extends Controller
         return redirect()->route('users.show', [$user]);
     }
     
+    /**
+     * 用户个人资料更新页面
+     *
+     * @param User $user
+     * 
+     * @return [type]
+     * 
+     */
     public function edit(User $user)
     {
+        // 使用模型访问策略控制访问控制器动作
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
+    /**
+     * 用户个人修改资料入库
+     *
+     * @param User $user
+     * @param Request $request
+     * 
+     * @return [type]
+     * 
+     */
     public function update(User $user,Request $request)
     {
+        // 使用模型访问策略控制访问控制器动作
+        $this->authorize('update', $user);
+        
         $this->validate($request, [
             'name' => 'required|max:50',
             // 修改字段验证的值可为nullable，当字段值为空时可以不用检验
