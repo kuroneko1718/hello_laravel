@@ -12,13 +12,25 @@ class UsersController extends Controller
         // 通过auth中间件，让指定的方法不需要登录验证就能访问
         $this->middleware('auth', [
             // 除了指定的动作（方法）不需要验证，其他都要
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store', 'index']
         ]);
 
         // 通过guest中间件，让游客只能访问注册页面
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+    }
+
+    /**
+     * 所有用户展示
+     *
+     * @return [type]
+     * 
+     */
+    public function index()
+    {
+        $users = User::paginate(6);
+        return view('users.index', compact('users'));
     }
     
     /**
@@ -137,5 +149,21 @@ class UsersController extends Controller
          */
         session()->flash('success', '个人资料更新成功！');
         return redirect()->route('users.show', $user);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param User $user
+     * 
+     * @return [type]
+     * 
+     */
+    public function destroy(User $user)
+    {
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
     }
 }
