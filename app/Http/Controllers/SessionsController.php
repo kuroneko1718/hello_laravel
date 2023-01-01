@@ -46,13 +46,21 @@ class SessionsController extends Controller
         // 验证器校验之后再使用Auth类对用户于users数据表进行校验
         // Auth::attempt(['email' => $email, 'password' => $password])
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            // 登录成功之后的动作
-            session()->flash('success', '欢迎回来~');
-            
-            $fallback = route('users.show', Auth::user());
-            // 使用Auth类获取验证过后的用户模型实例
-            // return redirect()->route('users.show', [Auth::user()]);
-            return redirect()->intended($fallback);
+            // 对用户邮件验证字段进行校验，如果邮箱没激活则重定向回首页
+            if (Auth::user()->activated) {
+                // 登录成功之后的动作
+                session()->flash('success', '欢迎回来~');
+                
+                $fallback = route('users.show', Auth::user());
+                // 使用Auth类获取验证过后的用户模型实例
+                // return redirect()->route('users.show', [Auth::user()]);
+                return redirect()->intended($fallback);                
+            }
+            else {
+                Auth::logout();
+                session()->flash('warning', '您的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                return redirect('/');
+            }
         }
         else {
             // 登录失败之后的动作

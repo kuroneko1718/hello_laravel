@@ -22,7 +22,7 @@ class AddIsAdminToUsersTable extends Migration
         // 为数据表users新增字段is_admin
         Schema::table('users', function (Blueprint $table) {
             // 声明字段is_admin为boolean类型，默认为false
-            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_admin')->default(false)->comment('是否为管理员身份');
         });
     }
 

@@ -49,4 +49,19 @@ class User extends Authenticatable
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
+
+    /**
+     * 用户模型类完成初始化之后就自动加载boot方法
+     *
+     * @return [type]
+     * 
+     */
+    public static function boot()
+    {
+        parent::boot();
+        // 使用事件监听模型创建之前的动作creating ，生成用户邮箱验证token
+        static::creating(function ($user) {
+            $user->activation_token = str_random(30);
+        });
+    }
 }
