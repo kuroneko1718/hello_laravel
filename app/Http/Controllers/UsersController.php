@@ -214,14 +214,19 @@ class UsersController extends Controller
         // 构造发送邮件的必要参数：邮件激活视图 $view，用户实例 $user，邮件发送者信息 $from, $name，邮件接收人信息 $to，邮件主题 $subject
         $view = 'emails.confirm';
         $data = compact('user');
-        $from = 'summer@example.com';
-        $name = 'Summer';
+        // 因为在配置文件.env中已经配置了邮件发送的相关内容，所以这里不需要配置了
+        // $from = 'summer@example.com';
+        // $name = 'Summer';
         $to = $user->email;
         $subject = '感谢注册 Weibo App 应用！请确认你的邮箱。';
 
         // 使用Mail发送激活邮件，使用闭包函数构造邮件信息并发送
-        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-            $message->from($from, $name) ->to($to) ->subject($subject);
+        // Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
+        //     $message->from($from, $name) ->to($to) ->subject($subject);
+        // });
+        Mail::send($view, $data, function ($message) use ($to, $subject) {
+            $message->to($to) ->subject($subject);
         });
+
     }
 }
