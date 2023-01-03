@@ -57,8 +57,10 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        $statuses = $user->statuses()->orderBy('created_at', 'desc')->paginate(30);
         // compact方法将数据绑定到视图
-        return view('users.show', compact('user'));
+        // compact方法接受多个参数，可以同时传递多个模型数据到视图上
+        return view('users.show', compact('user', 'statuses'));
     }
 
     /**
