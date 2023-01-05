@@ -55,3 +55,8 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 // 执行密码更新操作
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+
+// 定义statuses模型的资源控制路由，并限定只接受创建和删除操作
+//  HTTP请求：POST URL路由：/statuses 动作： StatusesController@store  处理创建微博的请求
+//  HTTP请求：DELETE URL路由：/statuses 动作： StatusesController@destroy 处理删除微博的请求
+Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
