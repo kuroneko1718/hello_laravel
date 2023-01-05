@@ -48,7 +48,7 @@ class UsersController extends Controller
     }
 
     /**
-     * 用户个人信息展示
+     * 用户个人信息展示和用户个人发表的微博动态倒序展示
      *
      * @param User $user
      * 
