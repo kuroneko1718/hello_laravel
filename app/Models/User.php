@@ -44,6 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * 获取个人头像
+     *
+     * @param String $size
+     * 
+     * @return [type]
+     * 
+     */
     public function gravatar(String $size = '100')
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
@@ -77,6 +85,12 @@ class User extends Authenticatable
         return $this->hasMany(Status::class);
     }
 
+    /**
+     * 首页微博动态拉取
+     *
+     * @return [type]
+     * 
+     */
     public function feed()
     {
         return $this->statuses()->orderBy('created_at', 'desc');
@@ -90,6 +104,11 @@ class User extends Authenticatable
      */
     public function followers()
     {
+        // 因为在此案例中无论是被关注者还是粉丝都是user表中的用户
+        // 设置两个表(user, user)之间的关系连接
+        // laravel默认会把多对多的关系再定义一张由两张表命名的关系表中(user_user)
+        // 用户也可以自定义关系表名、主表和从属表关联的字段
+        // belongsToMany(Model ModelClass, 'relations_table_name', 'primary_table_foreign_key', 'secondary_table_local_key');
         return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
 
@@ -104,6 +123,15 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
 
+    /**
+     * 关注用户
+     * 生成用户于关注者之间联系
+     *
+     * @param mixed $user_ids
+     * 
+     * @return [type]
+     * 
+     */
     public function follow($user_ids)
     {
         if (!is_array($user_ids)) {
@@ -113,6 +141,15 @@ class User extends Authenticatable
         $this->followings()->sync($user_ids, false);
     }
 
+    /**
+     * 取消关注
+     * 删除用户与关注者之间联系
+     *
+     * @param mixed $user_ids
+     * 
+     * @return [type]
+     * 
+     */
     public function unfollow($user_ids)
     {
         if (!is_array($user_ids)) {
@@ -121,6 +158,14 @@ class User extends Authenticatable
         $this->followings()->detach($user_ids);
     }
 
+    /**
+     * 判断用户是否已经关注
+     *
+     * @param mixed $user_id
+     * 
+     * @return [type]
+     * 
+     */
     public function isFollowing($user_id)
     {
         return $this->followings()->contains($user_id);

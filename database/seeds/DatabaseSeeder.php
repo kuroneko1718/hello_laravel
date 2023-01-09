@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             // php artisan db:seed --class=UsersTableSeeder
             UsersTableSeeder::class,
             // status模型的假数据实例填充类
-            StatusesTableSeeder::class
+            StatusesTableSeeder::class,
+            // Followers关系表的假数据填充类
+            FollowersTableSeeder::class
         ]);
     }
 }
