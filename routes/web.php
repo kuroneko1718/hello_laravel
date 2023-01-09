@@ -60,3 +60,8 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 //  HTTP请求：POST URL路由：/statuses 动作： StatusesController@store  处理创建微博的请求
 //  HTTP请求：DELETE URL路由：/statuses 动作： StatusesController@destroy 处理删除微博的请求
 Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
+
+//  HTTP请求：GET URL路由：/users/{user_id}/followings 动作： UsersController@followings  显示用户的关注人列表
+Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
+//  HTTP请求：GET URL路由：/users/{user_id}/followers 动作： UsersController@followers   显示用户的粉丝列表
+Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
