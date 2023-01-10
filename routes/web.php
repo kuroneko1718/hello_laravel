@@ -65,3 +65,8 @@ Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy'
 Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
 //  HTTP请求：GET URL路由：/users/{user_id}/followers 动作： UsersController@followers   显示用户的粉丝列表
 Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
+
+//  HTTP请求：POST URL路由：/users/followers/{user} 动作： FollowersController@store  关注用户动作
+Route::post('/users/followers/{user}', 'FollowersController@store')->name('followers.store');
+//  HTTP请求：DELETE URL路由：/users/followers/{user} 动作： FollowersController@destroy  取消关注用户动作
+Route::delete('users/followers/{user}', 'FollowersController@destroy')->name('followers.destroy');
