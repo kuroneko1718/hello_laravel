@@ -16,6 +16,7 @@ class FollowersController extends Controller
         // 使用auth中间件判断用户是否登录 
         $this->middleware('auth');
     }
+    
     /**
      * 用户关注动作
      *
