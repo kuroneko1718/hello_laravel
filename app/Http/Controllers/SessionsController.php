@@ -10,7 +10,7 @@ class SessionsController extends Controller
 {
     public function __construct()
     {        
-        // 通过guest中间件，让游客只能访问注册登录页面
+        // 通过guest权限认证中间件，让游客只能访问注册登录页面
         $this->middleware('guest', [
             'only' => ['create']
         ]);
@@ -28,7 +28,7 @@ class SessionsController extends Controller
     }
 
     /**
-     * 验证用户信息
+     * 保存用户信息
      *
      * @param Request $request
      * 

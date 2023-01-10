@@ -96,12 +96,16 @@ class User extends Authenticatable
         // 只拉取所有自己的动态展示
         // return $this->statuses()->orderBy('created_at', 'desc');
         // 获取所有关注的人和自己的user_id，从status表中查出所有所有属于这些user_ids的动态
+        // pluck() 方法只去除模型中的指定字段
         $user_ids = $this->followings->pluck('id')->toArray();
         // User::followings 返回的是Eloquent模型集合
         // User::followings() 返回的是数据库请求构造器
         // User::followings()->get();  /  User::followings()->paginate();
         array_push($user_ids, $this->id);
-        return Status::whereIn('user_id', $user_ids)->with('user')->orderBy('created_at', 'desc');
+        return Status::whereIn('user_id', $user_ids)
+            // 使用with模型预加载，避免了N+1的问题
+            ->with('user')
+            ->orderBy('created_at', 'desc');
     }
 
     /**
